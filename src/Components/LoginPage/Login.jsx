@@ -1,9 +1,40 @@
 import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { ToastContainer, toast } from 'react-toastify'
 import "./login.css"
-const LoginPage = () => {
+import axios from 'axios'
+const LoginPage = (props) => {
+    const [userName, setUserName] = useState('username')
+    const [password, setPassword] = useState('password')
+    const navigate = useNavigate();
+    const handeLogin = (e) =>{
+        e.preventDefault();
+        const newUser = {
+            username: userName,
+            password: password,
+        };
+        axios({
+            method: 'post',
+            url: 'http://localhost:8000/login',
+            data: newUser,
+            config: {headers: {'Content-Type':'application/x-www-form-urlencoded'}}
+
+        })
+        .then(function (response){
+            //handle success
+            console.log(response)
+            toast.success('Sucessfully Login')
+            if(response.data.status === 200){
+                props.setLogin(true)
+            }
+        })
+        .catch(function (response){
+            //handle error 
+            console.log(response)
+        })
+    }
     return ( 
-     
-     <section className ="login-container">
+    <section className ="login-container">
     <div className="login-title"> LOG IN </div>
     <div className="login-input">
         <form>
@@ -14,12 +45,9 @@ const LoginPage = () => {
             name="username"
             type="text"
             placeholder="Enter username"
-            // value={formik.values.username}
-            // onChange={formik.handleChange}
+            onChange={(e)=> setUserName(e.target.value)}
             />
-        {/* {formik.errors.username && (
-            <p className="errorMsg">{formik.errors.username}</p>
-          )} */}
+    
         <label className="password-label"> PASSWORD </label>
         <input
             className="login-password"
@@ -27,22 +55,14 @@ const LoginPage = () => {
             name="password"
             type="password"
             placeholder="Enter password"
-            // value={formik.values.password}
-            // onChange={formik.handleChange}
+            onChange={(e)=> setPassword(e.target.value)}
         />
-        {/* {formik.errors.password && (
-            <p className="errorMsg">{formik.errors.password}</p>
-        )}
-          {error && <p className="register-err"> {error.substr(50).replace("to be unique","already existed")} </p>} */}
-        <button type="submit"> Continue </button>
+        <button type="submit" onClick={handeLogin}> Continue </button>
         </form>
         <div className ="login-register">Don't have an account yet?</div>
-        <Link className="login-register-link" to="/register">
-            Register Now
-        </Link>
+        <Link className="login-register-link" to="/register">Register Now</Link>
         </div>
-     </section>
-     );
+    </section>
+    );
 }
- 
 export default LoginPage;
