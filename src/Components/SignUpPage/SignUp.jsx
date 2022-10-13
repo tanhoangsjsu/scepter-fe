@@ -47,7 +47,11 @@ const SignUp = (props) => {
             method: 'post',
             url: 'http://localhost:8000/register',
             data: formData,
-            config: {headers: {'Content-Type':'application/x-www-form-urlencoded'}}
+            headers: {'Content-Type':'application/x-www-form-urlencoded'},
+            body: JSON.stringify({
+               formData
+            })
+            
 
         })
         .then(function (response){
