@@ -1,14 +1,20 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useRef, useState } from "react";
+import { Link, browserHistory } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify'
 import "./signup.css";
 import {useFormik} from "formik"
 import * as Yup from "yup"
 import axios from 'axios'
-const SignUp = () => {  
+const SignUp = (props) => {  
+    const studentRole = 'student';
+    const assistanceRole = 'assistance';
+    const roleRef = useRef(null);
     const formik = useFormik({
         initialValues:{
             email:"",
             username:"",
-            password:""
+            password:"",
+            role: roleRef
         },
         validationSchema: Yup.object({
             username: Yup.string()
@@ -29,24 +35,32 @@ const SignUp = () => {
         }), 
 
         onSubmit:(values)=>{
+            let currentRole = roleRef.current.value
             console.log(values)
             let formData = new FormData();
             formData.append('username',values.username)
             formData.append('password',values.password)
             formData.append('email',values.email)
-
+            formData.append('role',currentRole)
         // Send a POST request
         axios({
             method: 'post',
             url: 'http://localhost:8000/register',
             data: formData,
-            config: {headers: {'Content-Type':'application/x-www-form-urlencoded'}}
+            headers: {'Content-Type':'application/x-www-form-urlencoded'},
+            body: JSON.stringify({
+               formData
+            })
+            
 
         })
         .then(function (response){
             //handle success
             console.log(response)
-            alert('New User Sucessfully Added. ')
+            toast.success('Sign Up Success')
+            if(response.data.status === 200){
+                props.setRegister(true)
+            }
         })
         .catch(function (response){
             //handle error 
@@ -86,7 +100,12 @@ const SignUp = () => {
             />
         {formik.errors.username && (
             <p className="errorMsg">{formik.errors.username}</p>
-          )}
+        )}
+        <label className="role-label"> ROLE </label>
+        <select ref={roleRef} defaultValue={studentRole} >
+            <option value={studentRole}>Student</option>
+            <option value={assistanceRole}>Assistance</option>
+        </select>
         <label className="password-label"> PASSWORD </label>
         <input
             className="register-password"
@@ -99,16 +118,13 @@ const SignUp = () => {
         />
         {formik.errors.password && (
             <p className="errorMsg">{formik.errors.password}</p>
-          )}
-          <button type="submit"> Create account </button>
+        )}
+        <button type="submit"> Create account </button>
         </form>
         <div className="register-login"> Already have an account? </div>
-        <Link className="register-login-link" to="/login">
-            Log in
-        </Link>
+        <Link className="register-login-link" to="/login">Log in</Link>
     </div>
 </section>
 )
 }
- 
 export default SignUp;
