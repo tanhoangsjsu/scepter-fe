@@ -15,7 +15,7 @@ const LoginPage = (props) => {
         };
         axios({
             method: 'post',
-            url: 'http://localhost:8000/login',
+            url: 'http://localhost:8000/v1/auth/login',
             data: newUser,
             config: {headers: {'Content-Type':'application/x-www-form-urlencoded'}}
 
@@ -24,12 +24,13 @@ const LoginPage = (props) => {
             //handle success
             console.log(response)
             toast.success('Sucessfully Login')
-            if(response.data.status === 200){
+            if(response.status === 200){
                 props.setLogin(true)
             }
         })
         .catch(function (response){
             //handle error 
+            toast.error("Wrong username or password")
             console.log(response)
         })
     }

@@ -100,3 +100,15 @@
     color: #777777;
     background-color: #55EEDD;
   }
+  select{
+    background-color: #F3F4F6;
+    border: 1px solid #E5E7EB;
+    display: block;
+    font-size: 0.9375rem;
+    height: 2.625rem;
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+    outline: none;
+    padding: 0 1rem;
+    width: 100%;
+  }
