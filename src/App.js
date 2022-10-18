@@ -11,7 +11,7 @@ import {
 } from "react-router-dom";
 import { useState } from 'react';
 import Toast from './Components/Toast/Toast';
-import StudentPage from './Components/StudentPage/StudentPage';
+import HomePage from './Components/HomePage/HomePage';
 function App() {
   const [isRegister,setRegister]= useState(false)
   const [isLogin,setLogin]= useState(false)
@@ -47,9 +47,9 @@ function App() {
                 />
               <Route
                     path="/login"
-                    element={isLogin ? <Navigate to="/studentpage" /> : <LoginPage setLogin={setLogin}/>}
+                    element={isLogin ? <Navigate to="/HomePage" /> : <LoginPage setLogin={setLogin}/>}
                 />
-              <Route path="/studentpage" element={<StudentPage/>} />
+              <Route path="/HomePage" element={<HomePage/>} />
             </Routes>
             <Toast/>
 

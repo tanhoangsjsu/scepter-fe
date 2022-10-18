@@ -37,33 +37,26 @@ const SignUp = (props) => {
         onSubmit:(values)=>{
             let currentRole = roleRef.current.value
             console.log(values)
-            let formData = new FormData();
-            formData.append('username',values.username)
-            formData.append('password',values.password)
-            formData.append('email',values.email)
-            formData.append('role',currentRole)
-        // Send a POST request
-        axios({
-            method: 'post',
-            url: 'http://localhost:8000/register',
-            data: formData,
-            headers: {'Content-Type':'application/x-www-form-urlencoded'},
-            body: JSON.stringify({
-               formData
-            })
-            
 
+
+            // Send a POST request
+        axios.post('http://localhost:8000/v1/auth/register', { 
+            email: values.email,
+            username: values.username,
+            role: currentRole,
+            password: values.password,
         })
         .then(function (response){
             //handle success
             console.log(response)
-            toast.success('Sign Up Success')
-            if(response.data.status === 200){
+            if(response.status === 200){
                 props.setRegister(true)
+                toast.success('Sign Up Success')
             }
         })
         .catch(function (response){
             //handle error 
+            toast.error('Username or Email is taken')
             console.log(response)
         })
         ;
