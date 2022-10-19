@@ -56,7 +56,7 @@ const SignUp = (props) => {
         })
         .catch(function (response){
             //handle error 
-            toast.error('Username or Email is taken')
+            toast.error('Oops.Something Wrong!')
             console.log(response)
         })
         ;
