@@ -1,14 +1,17 @@
-import { useRef, useState } from "react";
-import { Link, browserHistory } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify'
+import { useRef} from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./signup.css";
 import {useFormik} from "formik"
 import * as Yup from "yup"
-import axios from 'axios'
-const SignUp = (props) => {  
+import { registerUser } from "../../redux/apiRequest";
+import { useDispatch } from "react-redux";
+
+const SignUp = () => {  
     const studentRole = 'student';
     const assistanceRole = 'assistance';
     const roleRef = useRef(null);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const formik = useFormik({
         initialValues:{
             email:"",
@@ -37,29 +40,13 @@ const SignUp = (props) => {
         onSubmit:(values)=>{
             let currentRole = roleRef.current.value
             console.log(values)
-
-
-            // Send a POST request
-        axios.post('http://localhost:8000/v1/auth/register', { 
-            email: values.email,
-            username: values.username,
-            role: currentRole,
-            password: values.password,
-        })
-        .then(function (response){
-            //handle success
-            console.log(response)
-            if(response.status === 200){
-                props.setRegister(true)
-                toast.success('Sign Up Success')
-            }
-        })
-        .catch(function (response){
-            //handle error 
-            toast.error('Oops.Something Wrong!')
-            console.log(response)
-        })
-        ;
+            const newUser = {
+                email: values.email,
+                username: values.username,
+                password: values.password,
+                role: currentRole,
+            };
+            registerUser(newUser, dispatch, navigate)
         }
     })
     return(

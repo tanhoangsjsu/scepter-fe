@@ -20,7 +20,7 @@
     max-width: 200;
     font-size: 0.85rem;
   }
-   input {
+  input {
     font-size: 1rem;
     padding: .65rem;
     border: none;
@@ -54,7 +54,7 @@
   .password-label {
     font-size: 0.85rem;
   }
-  button{
+ .login-input button{
     cursor: pointer;
     align-self: center;
     margin-top: 1rem;
