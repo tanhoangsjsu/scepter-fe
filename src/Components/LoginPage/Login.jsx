@@ -3,11 +3,19 @@ import { useState } from "react";
 import { ToastContainer, toast } from 'react-toastify'
 import "./login.css"
 import axios from 'axios'
+import io from "socket.io-client"
+
+function Dummy() {}
+
+
+
 const LoginPage = (props) => {
     const [userName, setUserName] = useState('username')
     const [password, setPassword] = useState('password')
     const navigate = useNavigate();
     const handeLogin = (e) =>{
+        // var io = require('socket.io-client');
+        console.log("In handeLogin");
         e.preventDefault();
         const newUser = {
             username: userName,
@@ -32,7 +40,24 @@ const LoginPage = (props) => {
             //handle error 
             toast.error("Wrong username or password")
             console.log(response)
-        })
+        });
+
+        console.log("Going to connect..");
+        const socket = io('http://localhost:9000', {reconnect: true});
+
+
+        socket.on('connect', function (socket) {
+            console.log('Socket-IO Connected!');
+        });
+
+        socket.on("NewUser", (msg) => {
+            console.log("New user has joined");
+        });
+
+        console.log("Emitting Login Event! ");
+        // setTimeout(Dummy,60000);
+        socket.emit("Login", 'TESTING');
+        console.log("Login event Sent");
     }
     return ( 
     <section className ="login-container">
