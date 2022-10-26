@@ -7,7 +7,7 @@ const Map = () => {
     useEffect(()=>{
         const map = new mapboxgl.Map({
         container: 'map', // container ID
-        style: 'mapbox://styles/tanhoang14/cl9cd5wre001014p50euradcq', // style URL
+        style: 'mapbox://styles/tanhoang14/cl9aa17ku002q14obtxtf7srx', // style URL
         center: [-121.88492, 37.3361663], // starting position [lng, lat]
         zoom: 9, // starting zoom
         projection: 'globe' // display the map as a 3D globe

@@ -19,17 +19,19 @@
     align-items: center;
 }
 .profile-container .user-name{
-    margin-right: 2rem;    
+    margin-right: 1.5rem;    
     width: 5rem;
     font-size: 0.875rem; 
     line-height: 1.25rem; 
     
 }
-img {
+.profile-container img {
     height: 3rem;    
     width: 3rem;
+    
     border-radius: 9999px;
     border-color: rgb(229 231 235);
+
 }
 
 

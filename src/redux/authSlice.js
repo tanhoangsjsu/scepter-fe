@@ -10,7 +10,7 @@ const authSlice = createSlice({
         },
         register:{
             isFetching: false,
-            error:false.valueOf,
+            error:false,
             success: false
         }
     },

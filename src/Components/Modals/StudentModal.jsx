@@ -20,7 +20,7 @@ const StudentModal = () => {
             <label className="logo"> SCEPTER </label>
             <div className="profile-container">
                 <div className="user-name">{user.username}</div>
-                <img clasName ="user-img" src={UserImage}></img>
+                <img className ="user-img" src={UserImage}></img>
             </div>
         </div>      
         

@@ -1,13 +1,12 @@
-import Car from "../../assest/Car.svg"
+import "../Modals/modal.css"
 import Text from "../../assest/Text.svg"
 import UserImage from "../../assest/Avatar.png"
-import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 const AssistanceModal = () => {
     
     const user = useSelector((state)=> state.auth.login.currentUser);
     const handleText = () =>{
-        toast.info("Feature not available in the Beta version!!!")
+        alert("Feature not available in the Beta version!!!")
     }
     return (
     <div className="action-items-container">
@@ -15,14 +14,14 @@ const AssistanceModal = () => {
             <label className="logo"> SCEPTER </label>
             <div className="profile-container">
                 <div className="user-name">{user.username}</div>
-                <img clasName ="user-img" src={UserImage}></img>
+                <img className ="user-img" src={UserImage}></img>
             </div>
         </div>      
         
         <div className="action-buttons-container">
             <div className="action-button">
-                <img src={Car}></img>
-                <h3>Ride</h3>
+                {/* <img src={Car}></img> */}
+                <h3>Request</h3>
             </div>
             <div className="action-button" onClick={handleText}>
                 <img src={Text}></img>
