@@ -1,38 +1,20 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { ToastContainer, toast } from 'react-toastify'
 import "./login.css"
-import axios from 'axios'
-const LoginPage = (props) => {
+import { loginUser } from "../../redux/apiRequest";
+import { useDispatch } from "react-redux";
+const LoginPage = () => {
     const [userName, setUserName] = useState('username')
     const [password, setPassword] = useState('password')
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const handeLogin = (e) =>{
         e.preventDefault();
         const newUser = {
             username: userName,
             password: password,
         };
-        axios({
-            method: 'post',
-            url: 'http://localhost:8000/v1/auth/login',
-            data: newUser,
-            config: {headers: {'Content-Type':'application/x-www-form-urlencoded'}}
-
-        })
-        .then(function (response){
-            //handle success
-            console.log(response)
-            toast.success('Sucessfully Login')
-            if(response.status === 200){
-                props.setLogin(true)
-            }
-        })
-        .catch(function (response){
-            //handle error 
-            toast.error("Wrong username or password")
-            console.log(response)
-        })
+        loginUser(newUser,dispatch, navigate)
     }
     return ( 
     <section className ="login-container">
