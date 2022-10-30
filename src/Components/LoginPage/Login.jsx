@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "./login.css"
+import io from "socket.io-client"
 import { loginUser } from "../../redux/apiRequest";
 import { useDispatch } from "react-redux";
 const LoginPage = () => {
@@ -9,12 +10,30 @@ const LoginPage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const handeLogin = (e) =>{
+        // var io = require('socket.io-client');
+        console.log("In handeLogin");
         e.preventDefault();
         const newUser = {
             username: userName,
             password: password,
         };
         loginUser(newUser,dispatch, navigate)
+
+        console.log("Going to connect..");
+        const socket = io('http://localhost:9000', {reconnect: true});
+
+
+        socket.on('connect', function (socket) {
+            console.log('Socket-IO Connected!');
+        });
+
+        socket.on("NewUser", (msg) => {
+            console.log("New user has joined");
+        });
+
+        console.log("Emitting Login Event! ");
+        socket.emit("Login", 'TESTING');
+        console.log("Login event Sent");
     }
     return ( 
     <section className ="login-container">
