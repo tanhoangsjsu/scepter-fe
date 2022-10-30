@@ -1,7 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "./login.css"
-import axios from 'axios'
 import io from "socket.io-client"
 import { loginUser } from "../../redux/apiRequest";
 import { useDispatch } from "react-redux";
