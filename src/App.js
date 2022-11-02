@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import HomePage from './Components/HomePage/HomePage';
 import Search from './Components/Search/Search';
+import Request from './Components/Request/Request';
 function App() {
   return (
   
@@ -18,8 +19,9 @@ function App() {
               <Route path="/" element={<LandingPage />} />
               <Route path="/register" element={<SignUp/>}/>
               <Route path="/login" element={<LoginPage/>}/>
-              <Route path="/HomePage" element={<HomePage/>} />
+              <Route path="/homepage" element={<HomePage/>} />
               <Route path="/search" element={<Search/>} />
+              <Route path="/request" element={<Request/>} />
             </Routes>
 
         </div>

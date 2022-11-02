@@ -1,5 +1,8 @@
 import { configureStore, combineReducers} from '@reduxjs/toolkit'
 import authReducer from "./authSlice"
+import startLocationReducer from "./startLocationSlice"
+import endLocationReducer from "./endLocationSlice"
+import requestReducer from './requestSlice'
 import storage from "redux-persist/lib/storage";
 import {
     persistStore,
@@ -10,7 +13,7 @@ import {
     PERSIST,
     PURGE,
     REGISTER,
-  } from "redux-persist";
+} from "redux-persist";
 
 const persistConfig = {
     key: "root",
@@ -20,6 +23,10 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     auth: authReducer,
+    pickup: startLocationReducer, 
+    dropoff: endLocationReducer,
+    req: requestReducer,
+
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

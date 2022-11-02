@@ -17,11 +17,11 @@
 .profile-container{
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 .profile-container .user-name{
-    margin-right: 1.5rem;    
     width: 5rem;
-    font-size: 0.875rem; 
+    font-size: 1rem; 
     line-height: 1.25rem; 
     
 }
@@ -32,6 +32,10 @@
     border-radius: 9999px;
     border-color: rgb(229 231 235);
 
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
 }
 
 
@@ -71,15 +75,12 @@
     height: 5rem;
     width: 7rem;
 
-    display: flex;
-    justify-content: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     
 }
-.action-button img:nth-child(2) {
-    height: 3rem;
-    width: 2rem;
-    
-}
+
 .action-button h3{
     display: flex; 
     justify-content: center;
