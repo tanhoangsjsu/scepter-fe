@@ -24,11 +24,10 @@ export const registerUser = async ( user, dispatch, navigate)=>{
     }
 }
 
-export const requestMaking = async ( request, dispatch, navigate)=>{
+export const requestMaking = ( request, dispatch, navigate)=>{
     dispatch(requestStart())
     try {
-        const res = await axios.post("v1/request", request)
-        dispatch(registerSuccess(res.data))
+        dispatch(registerSuccess(request))
         navigate("/homepage");
     } catch (error) {
         dispatch(registerFailed)
