@@ -1,14 +1,19 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import "./login.css"
 import io from "socket.io-client"
 import { loginUser } from "../../redux/apiRequest";
 import { useDispatch } from "react-redux";
+import axios from "axios";
+import { useSelector } from "react-redux";
+
 const LoginPage = () => {
     const [userName, setUserName] = useState('username')
     const [password, setPassword] = useState('password')
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const userRole = useSelector((state)=> state.auth.login.currentUser.role)
+    
     const handeLogin = (e) =>{
         // var io = require('socket.io-client');
         console.log("In handeLogin");
@@ -27,12 +32,12 @@ const LoginPage = () => {
             console.log('Socket-IO Connected!');
         });
 
+        /*
         socket.on("NewUser", (msg) => {
             console.log("New user has joined");
-        });
-
+        });*/
         console.log("Emitting Login Event! ");
-        socket.emit("Login", 'TESTING');
+        socket.emit("Login", userRole);
         console.log("Login event Sent");
     }
     return ( 
