@@ -2,7 +2,7 @@ import "../Modals/modal.css"
 import { useNavigate } from "react-router-dom";
 import UserImage from "../../assest/Avatar.png"
 import Car from "../../assest/Car.svg"
-import Wheels from "../../assest/Wheels.png"
+import Wheels from "../../assest/Wheels.svg"
 import Text from "../../assest/Text.svg"
 import { useSelector } from "react-redux";
 const StudentModal = () => {
@@ -38,7 +38,6 @@ const StudentModal = () => {
                 <h3>Text</h3>
             </div>
         </div> 
-        <div className="input-button" onClick={handleclick}>WHERE TO? </div>
     </div>
     );
 }

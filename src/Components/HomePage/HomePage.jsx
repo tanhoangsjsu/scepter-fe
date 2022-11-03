@@ -6,13 +6,12 @@ import AssistanceModal from "../Modals/AssistanceModal";
 
 const HomePage = () => {
   const userRole = useSelector((state)=> state.auth.login.currentUser.role);
-  console.log(userRole)
   return ( 
     <>
     <div className ="home-container">
       <Map/>
-      {userRole == 'student'&& <StudentModal/>}
-      {userRole == 'assistance' && <AssistanceModal/>}
+      {userRole === 'student'&& <StudentModal/>}
+      {userRole === 'assistance' && <AssistanceModal/>}
     </div>
     </>
   );
