@@ -1,6 +1,5 @@
 import axios from "axios"
 import { loginFailed, loginStart, loginSuccess, registerFailed, registerStart, registerSuccess } from "./authSlice"
-import { requestStart } from "./requestSlice";
 
 
 export const loginUser = async ( user, dispatch, navigate)=>{
@@ -21,15 +20,5 @@ export const registerUser = async ( user, dispatch, navigate)=>{
         navigate("/login");
     } catch (error) {
         dispatch(registerFailed())
-    }
-}
-
-export const requestMaking = ( request, dispatch, navigate)=>{
-    dispatch(requestStart())
-    try {
-        dispatch(registerSuccess(request))
-        navigate("/homepage");
-    } catch (error) {
-        dispatch(registerFailed)
     }
 }

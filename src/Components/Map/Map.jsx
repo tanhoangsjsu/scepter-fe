@@ -115,7 +115,7 @@ const Map = () => {
             'line-cap': 'round'
             },
             paint: {
-            'line-color': '#3887be',
+            'line-color': 'red',
             'line-width': 5,
             'line-opacity': 0.75
             }
@@ -172,7 +172,7 @@ const Map = () => {
         .setLngLat(coordinates)
         .addTo(map);
         // Create a default Marker, colored black, rotated 45 degrees.
-        const marker2 = new mapboxgl.Marker({ color: 'black'})
+        const marker2 = new mapboxgl.Marker({ color: 'blue'})
         .setLngLat(coordinates)
         .addTo(map);
     }

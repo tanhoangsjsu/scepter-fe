@@ -7,12 +7,12 @@ import { GoPrimitiveSquare } from 'react-icons/go';
 import { MdStars } from 'react-icons/md';
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { useDispatch, useSelector} from "react-redux";
 import { updateStartLatitude, updateStartLongtitude } from "../../redux/startLocationSlice";
 import { updateEndLatitude, updateEndLongtitude } from "../../redux/endLocationSlice";
-import { requestMaking } from "../../redux/apiRequest";
-import { requestSuccess } from "../../redux/requestSlice";
+import { createRequest } from "../../redux/requestSlice";
 
 const Search = () => {
     const style = { color: "black", fontSize: "1.5em"};
@@ -20,14 +20,17 @@ const Search = () => {
     const [dropoff, setDropoff] = useState('');
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const user = useSelector((state)=> state.auth.login.currentUser);
 
     const handleRequest = (e) =>{
         e.preventDefault();
         const newRequest = {
+            id:uuidv4(),
+            username: user.username,
             pickup : pickup,
             dropoff : dropoff, 
         }
-        dispatch(requestSuccess(newRequest))
+        dispatch(createRequest(newRequest))
         handleBack()
     }
     const getPickupCoordinates = async ()=>{
