@@ -25,8 +25,7 @@ const rootReducer = combineReducers({
     auth: authReducer,
     pickup: startLocationReducer, 
     dropoff: endLocationReducer,
-    req: requestReducer,
-
+    request: requestReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
