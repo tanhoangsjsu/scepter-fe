@@ -13,7 +13,10 @@ const ProfilePage = () => {
           <h1 className="profile-name">{user.username}</h1>
       </div>
       <div className="profile-details">
-        {user.role === "assistance" ? <Skills />: <Disabilities/>}
+        {user.role === "assistance" ? <Skills /> : <Disabilities />}
+      </div>
+      <div className="signout-button">
+        <button className="account-signout">Sign Out</button>
       </div>
     </div>
   )
