@@ -1,0 +1,9 @@
+.profile-page {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-page-header {
+  text-align: center;
+}

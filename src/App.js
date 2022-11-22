@@ -10,6 +10,7 @@ import {
 import HomePage from './Components/HomePage/HomePage';
 import Search from './Components/Search/Search';
 import Request from './Components/Request/Request';
+import ProfilePage from './Components/ProfilePage/ProfilePage';
 function App() {
   return (
   
@@ -22,6 +23,7 @@ function App() {
               <Route path="/homepage" element={<HomePage/>} />
               <Route path="/search" element={<Search/>} />
               <Route path="/request" element={<Request/>} />
+              <Route path="/profile" element={<ProfilePage/>} />
             </Routes>
 
         </div>
