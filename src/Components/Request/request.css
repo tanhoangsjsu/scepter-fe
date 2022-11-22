@@ -1,11 +1,11 @@
 .request-container{
-    background-color: #b6eee8;
+    background-color: #fff;
     color:#fff;
     height: 100vh;
 }
 /* rectangle behind request*/
 .card-container{
-    background-color: #ceeeea;
+    background-color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
