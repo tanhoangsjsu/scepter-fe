@@ -1,7 +1,8 @@
 import "../HomePage/homepage.css"
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector} from "react-redux";
+
 
 
 const Map = () => {
@@ -13,6 +14,7 @@ const Map = () => {
     const dropoffLattitude = useSelector((state)=>(state.dropoff.lattitude))
     let pickupCoordinates = [pickupLongtitude, pickupLattitude]
     let dropoffCoordinates = [dropoffLongtitude, dropoffLattitude]
+    
     useEffect(()=>{
     const map = new mapboxgl.Map({
         container: 'map', // container ID
@@ -47,35 +49,6 @@ const Map = () => {
                     padding: 60
                 });
         }
-        // map.on('load',()=>{
-        //     map.addSource('route', {
-        //         'type': 'geojson',
-        //         'data': {
-        //             'type': 'Feature',
-        //             'properties': {},
-        //             'geometry': {
-        //                 'type': 'LineString',
-        //                 'coordinates': [
-        //                     [pickupLongtitude, pickupLattitude],
-        //                     [dropoffLongtitude, dropoffLattitude],
-        //                 ]
-        //             }
-        //         }
-        //     });
-        //     map.addLayer({
-        //         'id': 'route',
-        //         'type': 'line',
-        //         'source': 'route',
-        //         'layout': {
-        //             'line-join': 'round',
-        //             'line-cap': 'round'
-        //         },
-        //         'paint': {
-        //             'line-color': '#000000',
-        //             'line-width': 7
-        //         }
-        //     });
-        // })
 
         // create a function to make a directions request
     async function getRoute() {
@@ -182,7 +155,8 @@ const Map = () => {
     return ( 
         <>
         <div className ="map-container" id="map">MAP</div>
-        <div id="instructions"></div>
+            <div id="instructions"></div>
+    
         </>
     );
     

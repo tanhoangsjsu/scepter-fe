@@ -1,0 +1,67 @@
+.request-container{
+    background-color: rgb(229 231 235);
+    color:#fff;
+    height: 100vh;
+}
+/* rectangle behind request*/
+.card-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-left: 1rem; /* 16px */
+    padding-right: 1rem; /* 16px */
+}
+.card{
+
+    background-color: rgb(255, 255, 255);
+    margin-bottom: 1rem;
+    padding: 1rem 1rem 1rem 2rem;
+    font-family: "Noto Sans", sans-serif;
+    color:black;
+
+    position: relative;
+    width: 85%;
+    
+    border-radius: 1.5rem;
+    border-style: solid;
+    border-color: rgb(0, 0, 0);
+}
+.card .title{
+    display: flex;
+    justify-content: center;
+    margin-bottom: revert;
+    border-bottom: 3px solid #000;
+}
+
+.card .card-info{
+    display: flex;
+    flex-direction: column;
+    padding-left: 1rem;
+}
+.card .cardbutt-container{
+    display: flex;
+    justify-content: center;
+    
+}
+.card button{
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    align-self: center;
+
+    margin-top: 1rem;
+    margin-right: 0.5rem;
+    
+
+    font-family: 'Sora';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 15px;
+
+    padding: .75rem;
+    color: #fff;
+    text-shadow:-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    border-radius: 15px;
+    background-color: black;
+}

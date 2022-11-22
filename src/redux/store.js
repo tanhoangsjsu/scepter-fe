@@ -1,8 +1,9 @@
 import { configureStore, combineReducers} from '@reduxjs/toolkit'
-import authReducer from "./authSlice"
+import authReducer from './authSlice'
 import startLocationReducer from "./startLocationSlice"
 import endLocationReducer from "./endLocationSlice"
-import requestReducer from './requestSlice'
+import requestReducer from "./requestSlice"
+import loadingReducer from './loadingSlice'
 import storage from "redux-persist/lib/storage";
 import {
     persistStore,
@@ -25,8 +26,8 @@ const rootReducer = combineReducers({
     auth: authReducer,
     pickup: startLocationReducer, 
     dropoff: endLocationReducer,
-    req: requestReducer,
-
+    request: requestReducer,
+    loading: loadingReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

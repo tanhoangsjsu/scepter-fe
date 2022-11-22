@@ -80,4 +80,8 @@
     font-weight: 700;
     color: #7bc5fa;
   }
-  
+  .loginError {
+    margin-top:1rem;
+    font-size:1rem;
+    color:rgb(255, 77, 77);
+  }

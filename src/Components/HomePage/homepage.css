@@ -16,7 +16,8 @@
     width: 18rem;
     top: 0;
     bottom: 30rem;
-    padding: 3rem;
+    max-height: 40rem;
+    padding: 2.5rem;
 
 
     background: white;

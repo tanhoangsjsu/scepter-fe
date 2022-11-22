@@ -1,28 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const requestSlice = createSlice({
-    name: "req",
+    name:"request",
     initialState:{
-        request:{
-            currentRequest:null,
-            isFetching:false,
-            error: false,
-            success: true,
-        }
+        requests: [
+            {
+                id:1,
+                socketId:1,
+                username:"",
+                pickup:"",
+                dropoff:"",
+            },
+        ],
     },
     reducers:{
-        requestStart: (state)=>{
-            state.request.isFetching = true; 
+        createRequest:(state,action)=>{
+            state.requests = [...state.requests,action.payload]
         },
-        requestSuccess: (state, action) =>{
-            state.request.isFetching = false;
-            state.request.error = false;
-            state.request.currentRequest = action.payload;
+        deleteRequest:(state,action)=>{
+            const nextRequest = state.requests.filter(request=> request.id !== action.payload.id)
+            state.requests = nextRequest
         },
-        requestFailed:(state)=>{
-            state.request.error = true; 
+        updateRequest:(state,action)=>{
+            state.requests = action.payload
         }
     }
 })
-export const {requestStart, requestSuccess, requestFailed} = requestSlice.actions;
-export default requestSlice.reducer
+
+export const {createRequest, deleteRequest,updateRequest} = requestSlice.actions;
+export default requestSlice.reducer;

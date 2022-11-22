@@ -1,20 +1,30 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./login.css"
 import { loginUser } from "../../redux/apiRequest";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { io } from "socket.io-client"
+import Loading from "../Loading/Loading";
 const LoginPage = () => {
+    const error = useSelector((state) => state.auth.login.message);
+    const loading = useSelector((state) => state.auth.login?.isFetching);
+    const user = useSelector((state)=> state.auth.login.currentUser);
+
     const [userName, setUserName] = useState('username')
     const [password, setPassword] = useState('password')
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const handeLogin = (e) =>{
+    const socket = io('http://localhost:8000', {reconnect: true});
+    const handleLogin = (e) =>{
         e.preventDefault();
         const newUser = {
             username: userName,
             password: password,
+            socketId: socket.id,
         };
         loginUser(newUser,dispatch, navigate)
+        console.log(newUser)
+        socket.emit("Login",userName)
     }
     return ( 
     <section className ="login-container">
@@ -40,8 +50,20 @@ const LoginPage = () => {
             placeholder="Enter password"
             onChange={(e)=> setPassword(e.target.value)}
         />
-        <button type="submit" onClick={handeLogin}> Continue </button>
+        {loading ? (
+        <button type="submit">
+            <Loading
+            loadingType="HashLoader"
+            color="#777777"
+            loading={loading}
+            size="30px"
+            />
+        </button>
+        ) : (
+            <button onClick={handleLogin} type="submit"> Continue </button>
+        )}
         </form>
+        {error && <p className="loginError"> {error} </p>}
         <div className ="login-register">Don't have an account yet?</div>
         <Link className="login-register-link" to="/register">Register Now</Link>
         </div>
