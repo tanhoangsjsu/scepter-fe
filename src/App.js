@@ -11,6 +11,8 @@ import HomePage from './Components/HomePage/HomePage';
 import Search from './Components/Search/Search';
 import Request from './Components/Request/Request';
 import ProfilePage from './Components/ProfilePage/ProfilePage';
+import Disabilities from './Components/ProfilePage/Disabilities';
+import Skills from './Components/ProfilePage/Skills';
 function App() {
   return (
   
@@ -23,7 +25,11 @@ function App() {
               <Route path="/homepage" element={<HomePage/>} />
               <Route path="/search" element={<Search/>} />
               <Route path="/request" element={<Request/>} />
-              <Route path="/profile" element={<ProfilePage/>} />
+              <Route path="/profile" element={<ProfilePage />}>
+                <Route path="disabilities" element={<Disabilities />} />
+                <Route path="skills" element={<Skills />} />
+              </Route>
+              
             </Routes>
 
         </div>
