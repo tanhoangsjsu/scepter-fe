@@ -1,0 +1,64 @@
+.profile-page {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.profile-page-header {
+  text-align: center;
+}
+
+.profile-details {
+  text-align: center;
+}
+
+/* CSS */
+button {
+  align-items: center;
+  background-color: #0A66C2;
+  border: 0;
+  border-radius: 100px;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: inherit;
+  font-size: 1rem;
+  justify-content: center;
+  min-height: 40px;
+  overflow: hidden;
+  padding: 0px;
+  padding-left: 20px;
+  padding-right: 20px;
+  text-align: center;
+  transition: background-color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, box-shadow 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+  user-select: none;
+  -webkit-user-select: none;
+  vertical-align: middle;
+}
+
+button:hover { 
+  background-color: #17437d;
+  color: #ffffff;
+}
+
+button:active {
+  background: #09223b;
+  color: #ffffffb3;
+}
+
+button:disabled { 
+  cursor: not-allowed;
+  background: #00000014;
+  color: #0000004d;
+}
+
+.signout-button {
+  background-color: crimson;
+}
+
+.signout-button:hover {
+  background: #880000;
+  color: #ffffff;
+}

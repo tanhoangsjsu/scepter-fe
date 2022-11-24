@@ -14,13 +14,16 @@ const AssistanceModal = () => {
     const handleRequest = () =>{
         navigate("/request")
     }
+    const handleProfile = () =>{
+        navigate("/profile")
+    }
     return (
     <div className="action-items-container">
         <div className="header-container">
             <label className="logo"> SCEPTER </label>
             <div className="profile-container">
                 <div className="user-name">{user.username}</div>
-                <img className ="user-img" src={UserImage}></img>
+                <img className ="user-img" src={UserImage} onClick={handleProfile}></img>
             </div>
         </div>      
         
