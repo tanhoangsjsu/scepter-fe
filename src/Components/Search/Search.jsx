@@ -33,7 +33,7 @@ const Search = () => {
         dispatch(createRequest(newRequest))
 
 	    // Send Axios event to back-end to create new request
-        const res = await axios.post("v1/auth/createRequest", newRequest)
+        const res = await axios.post("v1/request/createRequest", newRequest)
 
         handleBack()
     }
