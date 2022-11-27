@@ -22,7 +22,7 @@ const Search = () => {
     const navigate = useNavigate();
     const user = useSelector((state)=> state.auth.login.currentUser);
 
-    const handleRequest = (e) =>{
+    const handleRequest = async (e) =>{
         e.preventDefault();
         const newRequest = {
             id:uuidv4(),
@@ -31,6 +31,10 @@ const Search = () => {
             dropoff : dropoff, 
         }
         dispatch(createRequest(newRequest))
+
+	    // Send Axios event to back-end to create new request
+        const res = await axios.post("v1/request/createRequest", newRequest)
+
         handleBack()
     }
     const getPickupCoordinates = async ()=>{
