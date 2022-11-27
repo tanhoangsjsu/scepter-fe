@@ -31,6 +31,10 @@ const Search = () => {
             dropoff : dropoff, 
         }
         dispatch(createRequest(newRequest))
+
+	// Send Axios event to back-end to create new request
+        const res = await axios.post("v1/auth/createRequest", newRequest)
+
         handleBack()
     }
     const getPickupCoordinates = async ()=>{
