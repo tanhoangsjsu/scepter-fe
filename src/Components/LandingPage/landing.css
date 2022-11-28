@@ -8,6 +8,11 @@
     color:#777777;
     height: 120vh;
     overflow: hidden;
+    text-shadow:
+    0.07em 0 #777777,
+    0 0.07em #777777,
+    -0.07em 0 #777777,
+    0 -0.07em #777777,
   }
   .landing-header {
     color: #55EEDD;
@@ -22,19 +27,28 @@
     font-size: 14px;
     background-color: #55EEDD;
     padding:0.65rem;
+    
 
     
     margin-bottom: 1rem;
     margin-top: 1rem;
     border-radius: 10px;
   }
+
+  .landing-sub {
+    font-size: 20px;
+    margin-top: 1rem;
+    
+  }
   
   .button-container {
     display: flex;
     flex-direction: column;
-    margin-top: 25rem;
+    margin-top: 0.5rem;
   }
-
+  .phone-mockup {
+    margin-top: 0.5rem;
+  }
   .login {
     
     border-radius: 14px;
@@ -46,6 +60,11 @@
     font-size: 18px;
     background-color: #55EEDD;
     color:#777777;
+    text-shadow:
+    0.07em 0 #777777,
+    0 0.07em #777777,
+    -0.07em 0 #777777,
+    0 -0.07em #777777,
 
   }
   .register {
@@ -58,4 +77,9 @@
     padding: 8px 15px;
     background-color: #55EEDD;
     color:#777777;
+    text-shadow:
+    0.07em 0 #777777,
+    0 0.07em #777777,
+    -0.07em 0 #777777,
+    0 -0.07em #777777,
   }

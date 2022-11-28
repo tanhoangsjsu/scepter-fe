@@ -5,7 +5,7 @@ import { RiMore2Line } from 'react-icons/ri';
 import { CiCirclePlus } from 'react-icons/ci';
 import { GoPrimitiveSquare } from 'react-icons/go';
 import { MdStars } from 'react-icons/md';
-import { useNavigate } from "react-router-dom";
+import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector} from "react-redux";
@@ -15,8 +15,9 @@ import { AddressAutofill, } from '@mapbox/search-js-react';
 import BackButton from "../BackButton/BackButton";
 import io from "socket.io-client";
 import { v4 as uuidv4 } from "uuid"
-import { createRequest } from "../../redux/requestSlice";
+import { updateMapData } from "../../redux/mapSlice";
 import Popup from '../PopupBox/Popup';
+import { makeRequest } from '../../redux/apiRequest';
 
 
 const Search = () => {
@@ -25,26 +26,53 @@ const Search = () => {
     const [dropoff, setDropoff] = useState('');
     const [open, setOpen] = React.useState(false);
     const [isLoading, setLoading] = useState(false);
+    const [errors, setErrors] = useState('')
     const dispatch = useDispatch();
     const user = useSelector((state)=> state.auth.login.currentUser);
+    const mapData = useSelector((state)=> state.tripInfo.trip)
     const socket = io.connect("http://localhost:8000")
-
-    const handleRequest = (e) =>{
+    const pickupLongtitude = useSelector((state)=>(state.pickup.longtitude))
+    const pickupLattitude = useSelector((state)=>(state.pickup.lattitude))
+    const dropoffLongtitude = useSelector((state)=>(state.dropoff.longtitude))
+    const dropoffLattitude = useSelector((state)=>(state.dropoff.lattitude))
+    mapboxgl.accessToken = 'pk.eyJ1IjoidGFuaG9hbmcxNCIsImEiOiJjbDkwZml6MmkweXdlM25wOHNhZmpta3JhIn0.MqMt1VO7SvoJXzv2d2ju6w';
+    async function getRoute() {
+        const query = await fetch(
+            `https://api.mapbox.com/directions/v5/mapbox/driving/${pickupLongtitude},${pickupLattitude};${dropoffLongtitude},${dropoffLattitude}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`,
+            { method: 'GET' }
+            );
+            const json = await query.json();
+            const data = json.routes[0];
+            dispatch(updateMapData(data))
+            if(data) return data;
+        }
+    const handleRequest = async (e) =>{
         e.preventDefault();
-        setOpen(true);
-        const newRequest = [{
-            id:uuidv4(),
-            socketId:socket.id,
-            username: user.username,
-            pickup : pickup,
-            dropoff : dropoff, 
-        }];
-        dispatch(createRequest(newRequest))
-        socket.emit("send_request",{ request: newRequest})
-        setLoading(true)
-            
-    }
+        if(pickup.length===0 || dropoff.length===0){
+            setErrors("Please enter all your destination")
+        }
+        else{
+            const routeData = getRoute()
+            routeData.then(res => {
+                const newRequest = {
+                    id:uuidv4(),
+                    socketId:socket.id,
+                    username: user.username,
+                    pickup : pickup,
+                    dropoff : dropoff, 
+                    distance: Math.floor(res?.distance / 20) ,
+                    duration: Math.floor(res?.duration / 60),
+                };
+                setErrors("")
+                setLoading(true)
+                setOpen(true);
+                makeRequest(newRequest,dispatch)
+                socket.emit("send_request",{ request: [newRequest]})
+            })
 
+        }   
+    }
+    
 
     const getPickupCoordinates = async ()=>{
         await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${pickup}.json?access_token=pk.eyJ1IjoidGFuaG9hbmcxNCIsImEiOiJjbDkwZml6MmkweXdlM25wOHNhZmpta3JhIn0.MqMt1VO7SvoJXzv2d2ju6w`)
@@ -77,6 +105,8 @@ const Search = () => {
             getDropoffCoordinates();
         }
     },[pickup,dropoff])
+    
+
 
     return (
     <div className="search-container">
@@ -89,6 +119,7 @@ const Search = () => {
                 <GoPrimitiveSquare style={style} size={25}/>
             </div>
             <div className="input-boxes">
+            <div className='input-errors'>{errors}</div>
             <form className="flex flex--column" >
             <AddressAutofill accessToken="pk.eyJ1IjoidGFuaG9hbmcxNCIsImEiOiJjbDkwZml6MmkweXdlM25wOHNhZmpta3JhIn0.MqMt1VO7SvoJXzv2d2ju6w">
                 <input 

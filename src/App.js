@@ -10,6 +10,8 @@ import {
 import HomePage from './Components/HomePage/HomePage';
 import Search from './Components/Search/Search';
 import Request from './Components/Request/Request';
+import ProfilePage from './Components/ProfilePage/ProfilePage';
+import ProtectedRoutes from './Components/ProtectedRoutes/ProtectedRoutes';
 function App() {
   return (
   
@@ -19,9 +21,14 @@ function App() {
               <Route path="/" element={<LandingPage />} />
               <Route path="/register" element={<SignUp/>}/>
               <Route path="/login" element={<LoginPage/>}/>
-              <Route path="/homepage" element={<HomePage/>} />
-              <Route path="/search" element={<Search/>} />
-              <Route path="/request" element={<Request/>} />
+              <Route element={<ProtectedRoutes/>}>
+                <Route path="/homepage" element={<HomePage/>} />
+                <Route path="/search" element={<Search/>} />
+                <Route path="/request" element={<Request/>} />
+                <Route path="/profile" element={<ProfilePage />}/>
+              </Route>
+              <Route path="*" element={<p>There's nothing here: 404!</p>} />
+        
             </Routes>
 
         </div>

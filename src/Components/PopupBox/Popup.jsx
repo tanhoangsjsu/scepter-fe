@@ -13,7 +13,6 @@ const Popup = (props) => {
     const socket = io.connect("http://localhost:8000")
     useEffect(()=>{
         socket.on("receive_notification",(data)=>{
-            console.log(data)
             if(data.length === 0){
                 setNoti([])
             }

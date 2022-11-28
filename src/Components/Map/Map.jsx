@@ -1,7 +1,9 @@
 import "../HomePage/homepage.css"
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import { useEffect, useState } from "react";
-import { useSelector} from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
+import { HiOutlineMenu } from 'react-icons/hi';
+import { updateMapData } from "../../redux/mapSlice";
 
 
 
@@ -12,9 +14,21 @@ const Map = () => {
     const pickupLattitude = useSelector((state)=>(state.pickup.lattitude))
     const dropoffLongtitude = useSelector((state)=>(state.dropoff.longtitude))
     const dropoffLattitude = useSelector((state)=>(state.dropoff.lattitude))
+    const mapData = useSelector((state)=> state.tripInfo.trip)
+    const dispatch = useDispatch()
     let pickupCoordinates = [pickupLongtitude, pickupLattitude]
     let dropoffCoordinates = [dropoffLongtitude, dropoffLattitude]
-    
+    const [direction, setDirection] = useState([])
+    const [openIns, setOpenIns] = useState(false);
+
+    const style = { 
+        cursor:'pointer',
+        color: "black", 
+        position: "absolute", 
+        top: "15px", 
+        bottom: "30px", 
+        left:'20px'
+    };
     useEffect(()=>{
     const map = new mapboxgl.Map({
         container: 'map', // container ID
@@ -61,6 +75,7 @@ const Map = () => {
         );
         const json = await query.json();
         const data = json.routes[0];
+        dispatch(updateMapData(data))
         const route = data.geometry.coordinates;
         const geojson = {
         type: 'Feature',
@@ -96,14 +111,7 @@ const Map = () => {
         }
         // add turn instructions here at the end
         const steps = data.legs[0].steps;
-        const instructions = document.getElementById('instructions');
-        let tripInstructions = '';
-        for (const step of steps) {
-        tripInstructions += `<li>${step.maneuver.instruction}</li>`;
-        }
-        instructions.innerHTML = `<p><strong>Trip duration: ${Math.floor(
-        data.duration / 60
-        )} min 🚴 </strong></p><ol>${tripInstructions}</ol>`;
+        setDirection(steps)
     }
     map.on('load', () => {
         // make an initial directions request that
@@ -149,13 +157,29 @@ const Map = () => {
         .setLngLat(coordinates)
         .addTo(map);
     }
-
+    const handleMenu = () =>{
+        setOpenIns(!openIns)
+    }
 
     
     return ( 
         <>
         <div className ="map-container" id="map">MAP</div>
-            <div id="instructions"></div>
+        <HiOutlineMenu style = {style} size={20} onClick={handleMenu}/>
+        {openIns ?
+            <div id="instructions">
+                <p><strong> Trip duration: {Math.floor(mapData?.duration / 60)} min 🚴</strong></p>
+                {direction.map((step,idx)=>{
+                    return(
+                        <div className="direction-step" key={idx}>
+                        <li>{step.maneuver.instruction}</li>
+                        </div>
+                    )
+                })}
+            </div>:
+            null
+        }
+            
     
         </>
     );

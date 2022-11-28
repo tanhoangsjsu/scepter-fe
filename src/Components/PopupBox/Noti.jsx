@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-
+import '../PopupBox/popup.css'
 const Noti = (props) => {
     const {noti} = props
     const navigate = useNavigate();
@@ -10,7 +10,7 @@ const Noti = (props) => {
     return (
         <div>{noti.map((data,key)=>{
             return(
-                <div clasName="noti-card" key={key}>
+                <div className="noti-card" key={key}>
                     <h2 className="noti-title">Pick up by</h2>
                     <div className="noti-info">
                         <p>Username:<span> {data.username}</span> </p>

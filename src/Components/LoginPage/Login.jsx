@@ -8,8 +8,6 @@ import Loading from "../Loading/Loading";
 const LoginPage = () => {
     const error = useSelector((state) => state.auth.login.message);
     const loading = useSelector((state) => state.auth.login?.isFetching);
-    const user = useSelector((state)=> state.auth.login.currentUser);
-
     const [userName, setUserName] = useState('username')
     const [password, setPassword] = useState('password')
     const navigate = useNavigate();
@@ -17,14 +15,18 @@ const LoginPage = () => {
     const socket = io('http://localhost:8000', {reconnect: true});
     const handleLogin = (e) =>{
         e.preventDefault();
-        const newUser = {
-            username: userName,
-            password: password,
-            socketId: socket.id,
-        };
-        loginUser(newUser,dispatch, navigate)
-        console.log(newUser)
-        socket.emit("Login",userName)
+        if(userName.length ===0 || password.length===0){
+            alert("Please enter all the field")
+        }
+        else{
+            const newUser = {
+                username: userName,
+                password: password,
+                socketId: socket.id,
+            };
+            loginUser(newUser,dispatch, navigate)
+            socket.emit("Login",userName)
+        }
     }
     return ( 
     <section className ="login-container">

@@ -23,9 +23,12 @@ const requestSlice = createSlice({
         },
         updateRequest:(state,action)=>{
             state.requests = action.payload
+        },
+        getRequest:(state,action)=>{
+            state.requests = action.payload
         }
     }
 })
 
-export const {createRequest, deleteRequest,updateRequest} = requestSlice.actions;
+export const {createRequest, deleteRequest,updateRequest, getRequest} = requestSlice.actions;
 export default requestSlice.reducer;
