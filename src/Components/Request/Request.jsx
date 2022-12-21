@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import io from "socket.io-client";
 import { useState } from "react";
 import Loading from "../Loading/Loading";
-import { getAllRequest } from "../../redux/apiRequest";
+import { deleteOneRequest } from "../../redux/apiRequest";
 import axios from "axios";
 const socket = io.connect("http://localhost:8000")
 
@@ -14,7 +14,7 @@ const Request = () => {
     const [isLoading, setLoading] = useState(true);
     const [clientID, setClientID] = useState('');
     const user = useSelector((state)=> state.auth.login.currentUser);
-    const token = user.accessToken
+    const accessToken = user.accessToken
     const dispatch = useDispatch();
     useEffect(()=>{
         socket.on("receive_request",(data)=>{
@@ -23,7 +23,7 @@ const Request = () => {
             }
             else{
                 setLoading(false)
-                // setReceive(receive.concat(data.request))
+                // setReceive(receive.concat(data. request))
                 setClientID(data.request[0].socketId)
             }
         })
@@ -31,24 +31,35 @@ const Request = () => {
 
     useEffect(()=>{
         axios.get('http://localhost:8000/v1/request/',{
-            headers: {token: `Bearer ${token}`}
+            headers: {token: `Bearer ${accessToken}`}
     }).then(res=>{
             setReceive(res.data)
             setLoading(false)
-        })
+        }).catch(function () {
+            console.log("Promise Rejected");
+       });
     },[])
-    const handleAccept =(id) =>{
+    const handleAccept =(request) =>{
         socket.emit("send_notification",[{
             username: user.username, 
             socketId: clientID,
         }])
-        console.log(id)
-        setReceive(receive.filter((req)=>req.id !== id))
+        // Find the index of the element with the matching id
+        const index = receive.findIndex((req) => req.id === request.id);
 
+        // Remove the element from the receive array using splice()
+        const updatedReceive = [...receive];
+        updatedReceive.splice(index, 1);
 
+        deleteOneRequest(accessToken,dispatch,request._id)
     }
     const handleDecline =(request) =>{
-        console.log(request)
+        // Find the index of the element with the matching id
+        const index = receive.findIndex((req) => req.id === request.id);
+
+        // Remove the element from the receive array using splice()
+        const updatedReceive = [...receive];
+        updatedReceive.splice(index, 1);
     }
     return ( 
             <div className="request-container">

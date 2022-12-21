@@ -10,7 +10,7 @@ import {
         logoutStart,
         logoutSuccess,
     } from "./authSlice"
-import { createRequest, getRequest } from "./requestSlice";
+import { createRequest, deleteRequest, getRequest } from "./requestSlice";
 axios.defaults.baseURL = 'http://localhost:8000/';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
@@ -26,16 +26,17 @@ export const loginUser = async ( user, dispatch, navigate)=>{
         console.log(error)
     }
 }
-export const registerUser = async ( dispatch, navigate)=>{
-    dispatch(registerStart())
+export const registerUser = async (user, dispatch, navigate) => {
+    dispatch(registerStart());
     try {
-        dispatch(registerSuccess())
-        navigate("/login");
-    } catch (error) {
-        dispatch(registerFailed())
+      await axios.post(`v1/auth/register`, user);
+      dispatch(registerSuccess());
+      navigate("/login");
+    } catch (err) {
+      console.log(err.response.data);
+      dispatch(registerFailed(err.response.data));
     }
-}
-
+  };
 export const logOutUser = async (dispatch, userId, accessToken,navigate) => {
     dispatch(logoutStart());
     try {
@@ -66,3 +67,14 @@ export const getAllRequest = async(dispatch,accessToken) =>{
         console.log(error)
     }
 }
+
+export const deleteOneRequest = async(accessToken,dispatch,id) =>{
+    try {
+        const res = await axios.delete("/v1/request/"+id,{
+            headers: {token : `Bearer ${accessToken}`}
+        })
+        dispatch(deleteRequest(res.data));
+    } catch (error) {
+        console.log(error)
+    }
+ }

@@ -13,7 +13,7 @@ const LandingPage = () => {
     <section className="landing-container">
         <div className="landing-header"> SCEPTER</div>
         <span className="beta"> Beta </span>
-        <div className="landing-sub"> Desgin to help SJSU student</div>
+        <div className="landing-sub"> Designed to help SJSU student</div>
         <img src={phoneMockup} className="phone-mockup" alt="phone mockup" />
         <div className="button-container">
             <button className="login" onClick={goToSignIn}>

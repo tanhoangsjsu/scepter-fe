@@ -10,6 +10,8 @@ const requestSlice = createSlice({
                 username:"",
                 pickup:"",
                 dropoff:"",
+                isFetching:false,
+                error:false,
             },
         ],
     },
@@ -18,8 +20,11 @@ const requestSlice = createSlice({
             state.requests = [...state.requests,action.payload]
         },
         deleteRequest:(state,action)=>{
-            const nextRequest = state.requests.filter(request=> request.id !== action.payload.id)
-            state.requests = nextRequest
+            // const nextRequest = state.requests.filter(request=> request.id !== action.payload.id)
+            // state.requests = nextRequest
+            state.requests.isFetching = false;
+            state.requests = action.payload
+
         },
         updateRequest:(state,action)=>{
             state.requests = action.payload

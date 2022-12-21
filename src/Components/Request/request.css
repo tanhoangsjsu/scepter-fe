@@ -2,6 +2,8 @@
     background-color: rgb(229 231 235);
     color:#fff;
     height: 100vh;
+    display: block;
+    overflow: auto;
 }
 /* rectangle behind request*/
 .card-container{
